@@ -1,0 +1,86 @@
+# источник видео
+source: "data/test.mp4"
+
+# модели
+person_model_path: "yolov8n.pt"
+ppe_model_path: "weights/best_yolo26s.pt"
+
+# устройство
+device: "cpu"
+imgsz: 640
+
+# частоты
+processing_fps: 25
+camera_fps_fallback: 25
+
+# пороги детекции
+conf_thres: 0.25
+ppe_conf_thres: 0.05
+iou_thres: 0.5
+
+classes:
+  boots: 0
+  gloves: 1
+  goggles: 2
+  helmet: 3
+  person: 4
+  vest: 5
+
+ppe_rules:
+  helmet:
+    beta: 0.35
+    min_iou: 0.01
+
+  goggles:
+    beta_top: 0.05
+    beta_bottom: 0.55
+    min_iou: 0.001
+
+  vest:
+    beta_top: 0.25
+    beta_bottom: 0.75
+    min_iou: 0.01
+
+  gloves:
+    beta_top: 0.35
+    beta_bottom: 0.85
+    edge_x: 0.25
+    min_iou: 0.01
+
+  boots:
+    beta: 0.88
+    min_iou: 0.01
+
+violations:
+  no_goggles:
+    threshold_sec: 0.2
+    cooldown_sec: 10.0
+  no_gloves:
+    threshold_sec: 0.2
+    cooldown_sec: 10.0
+  no_boots:
+    threshold_sec: 0.2
+    cooldown_sec: 10.0
+  no_helmet:
+    threshold_sec: 0.1
+    cooldown_sec: 10.0
+  no_vest:
+    threshold_sec: 0.1
+    cooldown_sec: 10.0
+  in_danger_zone:
+    threshold_sec: 1.0
+    cooldown_sec: 5.0
+
+clip:
+  pre_seconds: 3
+  post_seconds: 3
+  codec: "mp4v"
+  enabled: true
+
+output_dir: "output"
+draw:
+  enabled: true
+  show_window: true
+  window_name: "Industrial Safety CV"
+  save_preview_video: false
+  preview_video_path: "output/preview.mp4"

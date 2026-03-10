@@ -1,0 +1,8 @@
+zones:
+  - id: "zone_1"
+    name: "Danger_zone"
+    polygon:
+      - [100, 200]
+      - [400, 200]
+      - [450, 450]
+      - [80,  460]
